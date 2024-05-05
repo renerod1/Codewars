@@ -1,23 +1,21 @@
+DB[:booltoword].multi_insert([
+  {bool: true}, 
+  {bool: false}
+])
+
 results = run_sql
 
-describe :query do
-  describe "should contain keywords" do
-    it "should contain SELECT" do
-      expect($sql.upcase).to include("SELECT")
-    end
-
-    it "should contain FROM" do
-      expect($sql.upcase).to include("FROM")
-    end
-  end
-
-  describe :columns do
-    it "should return 1 column" do
-      expect(results.first.keys.count).to eq 1
-    end
-    
-    it "should return a mod column" do
-      expect(results.first.keys).to include(:mod)
-    end
- end
+describe :columns do
+   it "should return 2 columns" do
+    expect(results.columns.count).to eq 2
+   end
 end
+
+describe :column_names do
+   it "should match column names" do
+     expect(results.columns[0].to_s).to eq "bool" 
+     expect(results.columns[1].to_s).to eq "res" 
+   end
+end
+
+compare_with expected do end
